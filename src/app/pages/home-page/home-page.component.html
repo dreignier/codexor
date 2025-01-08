@@ -1,1 +1,9 @@
-<app-redactor></app-redactor>
+@if (module.modules.length) {
+  <ul>
+    @for (module of module.modules; track module.name) {
+      <li>
+        <a [routerLink]="'/' + module.name">{{ module.name }}</a>
+      </li>
+    }
+  </ul>
+}

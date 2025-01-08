@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { MessageComponent } from './message/message.component';
+import { Component } from '@angular/core'
+import { RouterOutlet } from '@angular/router'
+import { MessageComponent } from './message/message.component'
 
 @Component({
   selector: 'app-root',
@@ -9,5 +9,5 @@ import { MessageComponent } from './message/message.component';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'codexor';
+
 }

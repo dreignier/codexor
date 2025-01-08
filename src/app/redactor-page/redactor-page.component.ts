@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, Input } from '@angular/core'
 
 @Component({
   selector: 'app-redactor-page',
@@ -7,10 +7,9 @@ import { Component } from '@angular/core'
   styleUrl: './redactor-page.component.scss'
 })
 export class RedactorPageComponent<T extends RedactorPage> {
-
+	@Input() page!: T
 }
 
 export class RedactorPage {
-
 
 }
