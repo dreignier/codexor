@@ -1,0 +1,21 @@
+<div class="fixed bottom-0 w-full flex flex-col items-center">
+  @for (message of messages; track $index) {
+    <div
+      class="inline-flex items-center p-2 rounded mb-6 text-white border border-white"
+      [class.bg-blue-500]="message.type === 'info'"
+      [class.bg-green-500]="message.type === 'success'"
+      [class.bg-orange-500]="message.type === 'warning'"
+      [class.bg-red-500]="message.type === 'error'"
+    >
+      <app-icon
+        class="mr-2 p-1 bg-white rounded size-8 inline-block"
+        [icon]="message.type"
+        [class.text-blue-500]="message.type === 'info'"
+        [class.text-green-500]="message.type === 'success'"
+        [class.text-orange-500]="message.type === 'warning'"
+        [class.text-red-500]="message.type === 'error'"
+      ></app-icon>
+      {{ message.text }}
+    </div>
+  }
+</div>

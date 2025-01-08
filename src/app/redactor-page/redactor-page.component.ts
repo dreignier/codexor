@@ -1,15 +1,18 @@
-import { Component, Input } from '@angular/core'
+import { Component, Input, Type } from '@angular/core'
 
 @Component({
   selector: 'app-redactor-page',
   imports: [],
-  templateUrl: './redactor-page.component.html',
-  styleUrl: './redactor-page.component.scss'
+	template: ''
 })
 export class RedactorPageComponent<T extends RedactorPage> {
 	@Input() page!: T
 }
 
 export class RedactorPage {
+	id: number = -1
 
+	constructor(
+		readonly component: Type<RedactorPageComponent<RedactorPage>>
+	) {}
 }

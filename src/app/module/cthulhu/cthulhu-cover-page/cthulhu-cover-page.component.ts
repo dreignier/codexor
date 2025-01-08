@@ -12,5 +12,7 @@ export class CthulhuCoverPageComponent extends RedactorPageComponent<CthulhuCove
 }
 
 export class CthulhuCoverPage extends RedactorPage {
-
+	constructor() {
+		super(CthulhuCoverPageComponent)
+	}
 }

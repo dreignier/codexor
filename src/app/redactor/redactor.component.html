@@ -1,1 +1,5 @@
-<h1>Redactor ! {{ module.name }}</h1>
+@for (page of pages; track page.id) {
+  <ng-container
+    *ngComponentOutlet="page.component; inputs: { page }"
+  ></ng-container>
+}
