@@ -26,6 +26,4 @@ export class RedactorComponent implements OnInit {
 		}
 	}
 
-
-
 }
