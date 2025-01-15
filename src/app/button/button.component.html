@@ -1,0 +1,15 @@
+<button
+  class="flex {{
+    icon && !label ? sizes[size] : heights[size]
+  }} items-center p-0.5 rounded-sm bg-white text-black hover:bg-black hover:text-white"
+  [class.justify-center]="icon && !label"
+  [title]="title"
+  (click)="appClick.emit()"
+>
+  @if (icon) {
+    <app-icon class="{{ sizes[size - 2] }}" [icon]="icon"></app-icon>
+  }
+  @if (label) {
+    <span class="ml-1">{{ label }}</span>
+  }
+</button>

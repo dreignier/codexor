@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core'
 
 @Component({
   selector: 'app-markdown-viewer',
@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './markdown-viewer.component.scss'
 })
 export class MarkdownViewerComponent {
-
+	@Input() markdown!: string
 }

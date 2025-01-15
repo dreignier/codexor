@@ -15,4 +15,8 @@ export class RedactorPage {
 	constructor(
 		readonly component: Type<RedactorPageComponent<RedactorPage>>
 	) {}
+
+	get movable() {
+		return true
+	}
 }

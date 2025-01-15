@@ -4,23 +4,21 @@ import { filter, map } from 'rxjs'
 import { Cthulhu } from './cthulhu/cthulhu'
 import { Module } from './module'
 
-const MODULES = [Cthulhu]
+const MODULES = [new Cthulhu()]
 const PARAM_NAME = 'module'
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class ModuleService {
 
-	modules: Module[] = []
-	module?: Module
+	modules: Module[] = MODULES
+	current?: Module
 
-  constructor(
+	constructor(
 		private readonly route: ActivatedRoute,
 		private readonly router: Router
 	) {
-		this.modules = MODULES.map(module => new module())
-
 		this.set(this.readInRouteParams() || this.readInLocation())
 
 		this.router.events.pipe(
@@ -43,8 +41,8 @@ export class ModuleService {
 	}
 
 	get() {
-		if (this.module) {
-			return this.module
+		if (this.current) {
+			return this.current
 		}
 
 		const name = this.readInLocation()
@@ -57,9 +55,9 @@ export class ModuleService {
 
 	set(name?: string) {
 		if (name) {
-			this.module = this.getByName(name)
+			this.current = this.getByName(name)
 		} else {
-			this.module = undefined
+			this.current = undefined
 		}
 	}
 

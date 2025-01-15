@@ -1,1 +1,13 @@
-<p>form works!</p>
+@if (form) {
+  <form [formGroup]="form">
+    @for (input of inputs; track input.property.key) {
+      <label>{{ name + "." + input.property.key | t }}</label>
+      <ng-container
+        *ngComponentOutlet="
+          input.component;
+          inputs: { property: input.property, control: input.control }
+        "
+      ></ng-container>
+    }
+  </form>
+}

@@ -1,5 +1,61 @@
-@for (page of pages; track page.id) {
-  <ng-container
-    *ngComponentOutlet="page.component; inputs: { page }"
-  ></ng-container>
-}
+<div #container class="flex flex-col items-center gap-4">
+  <div id="vs-start" [style.height]="vsBefore + 'px'"></div>
+  @for (page of displayedPages; track page.id) {
+    <div class="flex gap-4">
+      <div
+        class="h-[29.7cm] flex-grow min-w-[32.5cm] flex flex-col rounded bg-gray-800"
+      >
+        @if (page.movable) {
+          <div class="flex p-1">
+            <div class="flex gap-1">
+              <app-button
+                icon="arrow-up"
+                title="{{ 'redactor.pageUp' | t }}"
+                (appClick)="pageUp(page)"
+                [size]="7"
+              ></app-button>
+              <app-button
+                icon="arrow-down"
+                title="{{ 'redactor.pageDown' | t }}"
+                (appClick)="pageDown(page)"
+                [size]="7"
+              ></app-button>
+            </div>
+            <app-button
+              icon="X"
+              title="{{ 'redactor.removePage' | t }}"
+              class="ml-auto"
+              (appClick)="removePage(page)"
+              [size]="7"
+            ></app-button>
+          </div>
+        }
+
+        <app-form
+          class="flex-grow"
+          [schema]="page.constructor"
+          [data]="page"
+        ></app-form>
+
+        @if (!pages[page.id + 1] || pages[page.id + 1].movable) {
+          <div class="flex justify-center gap-4 p-1">
+            @for (type of module.availablePages(); track type.name) {
+              <app-button
+                icon="plus-circle"
+                label="{{ 'redactor.page.' + type.name | t }}"
+                (appClick)="addPage(page.id + 1, type)"
+                [size]="7"
+              ></app-button>
+            }
+          </div>
+        }
+      </div>
+      <div class="w-[21cm] h-[29.7cm]">
+        <ng-container
+          *ngComponentOutlet="page.component; inputs: { page }"
+        ></ng-container>
+      </div>
+    </div>
+  }
+  <div [style.height]="vsAfter + 'px'"></div>
+</div>
