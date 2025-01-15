@@ -1,9 +1,9 @@
-import { NgComponentOutlet } from '@angular/common'
 import { Component, HostListener, Input, OnInit, Type } from '@angular/core'
 import { ButtonComponent } from '../button/button.component'
 import { FormComponent } from '../form/form.component'
 import { Module } from '../module/module'
-import { RedactorPage } from '../redactor-page/redactor-page.component'
+import { RedactorBasePage } from '../redactor-base-page/redactor-base-page.component'
+import { RedactorPageComponent } from '../redactor-page/redactor-page.component'
 import { TPipe } from '../t'
 import { arrayDown, arrayUp } from '../util'
 
@@ -13,14 +13,14 @@ const PAGE_HEIGHT_GAP = PAGE_HEIGHT + GAP
 
 @Component({
   selector: 'app-redactor',
-  imports: [FormComponent, NgComponentOutlet, ButtonComponent, TPipe],
+  imports: [FormComponent, ButtonComponent, TPipe, RedactorPageComponent],
   templateUrl: './redactor.component.html',
   styleUrl: './redactor.component.scss'
 })
 export class RedactorComponent implements OnInit {
 	@Input() module!: Module
-	pages: RedactorPage[] = []
-	displayedPages: RedactorPage[] = []
+	pages: RedactorBasePage[] = []
+	displayedPages: RedactorBasePage[] = []
 	printMode = false
 
 	vsStart = 0
@@ -77,13 +77,13 @@ export class RedactorComponent implements OnInit {
 		}
 	}
 
-	addPage(index: number, constructor: Type<RedactorPage>) {
+	addPage(index: number, constructor: Type<RedactorBasePage>) {
 		const page = new constructor()
 		this.pages.splice(index, 0, page)
 		this.recompute()
 	}
 
-	pageUp(page: RedactorPage) {
+	pageUp(page: RedactorBasePage) {
 		if (page.id <= 0 || !page.movable || !this.pages[page.id - 1]?.movable) {
 			return
 		}
@@ -92,7 +92,7 @@ export class RedactorComponent implements OnInit {
 		this.recompute()
 	}
 
-	pageDown(page: RedactorPage) {
+	pageDown(page: RedactorBasePage) {
 		if (page.id >= this.pages.length - 1 || !page.movable || !this.pages[page.id + 1]?.movable) {
 			return
 		}
@@ -101,7 +101,7 @@ export class RedactorComponent implements OnInit {
 		this.recompute()
 	}
 
-	removePage(page: RedactorPage) {
+	removePage(page: RedactorBasePage) {
 		this.pages.splice(page.id, 1)
 		this.recompute()
 	}

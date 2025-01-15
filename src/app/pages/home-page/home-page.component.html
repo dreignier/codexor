@@ -1,9 +1,12 @@
 @if (module.modules.length) {
-  <ul>
+  <div class="mx-auto max-w-7xl flex gap-4 mt-8">
     @for (module of module.modules; track module.name) {
-      <li>
-        <a [routerLink]="'/' + module.name">{{ module.name }}</a>
-      </li>
+      <a
+        class="size-96 flex items-center justify-center rounded bg-white text-black hover:bg-black hover:text-white"
+        [routerLink]="'/' + module.name"
+      >
+        {{ "module." + module.name + ".label" | t }}
+      </a>
     }
-  </ul>
+  </div>
 }

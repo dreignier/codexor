@@ -1,13 +1,18 @@
 @if (form) {
-  <form [formGroup]="form">
+  <form [formGroup]="form" class="flex flex-col flex-grow gap-4">
     @for (input of inputs; track input.property.key) {
-      <label>{{ name + "." + input.property.key | t }}</label>
-      <ng-container
-        *ngComponentOutlet="
-          input.component;
-          inputs: { property: input.property, control: input.control }
-        "
-      ></ng-container>
+      <div
+        class="flex flex-col gap-1 input-container"
+        [class.flex-grow]="input.property.options().grow"
+      >
+        <label>{{ name + "." + input.property.key | t }}</label>
+        <ng-container
+          *ngComponentOutlet="
+            input.component;
+            inputs: { property: input.property, control: input.control }
+          "
+        ></ng-container>
+      </div>
     }
   </form>
 }

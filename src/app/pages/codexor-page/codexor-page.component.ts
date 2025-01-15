@@ -1,6 +1,5 @@
 import { Component } from '@angular/core'
 import { RouterOutlet } from '@angular/router'
-import { ModuleService } from '../../module/module.service'
 
 @Component({
 	selector: 'app-codexor-page',
@@ -9,9 +8,5 @@ import { ModuleService } from '../../module/module.service'
 	styleUrl: './codexor-page.component.scss'
 })
 export class CodexorPageComponent {
-
-	constructor(
-		readonly module: ModuleService
-	) { }
 
 }

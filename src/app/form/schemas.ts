@@ -45,11 +45,7 @@ export function getSchema(target: Type<any>) {
 }
 
 class PropertyOptions {
-
-}
-
-class MarkdownPropertyOptions extends PropertyOptions {
-	fullHeight?: boolean
+	grow?: boolean
 }
 
 function decorator(options: PropertyOptions, callback: (property: SchemaProperty) => void) {
@@ -59,10 +55,10 @@ function decorator(options: PropertyOptions, callback: (property: SchemaProperty
 	}
 }
 
-export function PropString() {
+export function PropString(options: PropertyOptions = {}) {
 	return decorator({}, property => property.string())
 }
 
-export function PropMarkdown(options: MarkdownPropertyOptions = {}) {
+export function PropMarkdown(options: PropertyOptions = {}) {
 	return decorator(options, property => property.markdown())
 }

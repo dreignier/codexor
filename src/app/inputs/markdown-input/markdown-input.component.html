@@ -1,1 +1,6 @@
-<p>markdown-input works!</p>
+<textarea
+  [formControl]="control"
+  [name]="property.key"
+  class="w-full h-20 text-black pl-1"
+  [class.flex-grow]="property.options().grow"
+></textarea>

@@ -1,4 +1,4 @@
-<div #container class="flex flex-col items-center gap-4">
+<div class="flex flex-col items-center gap-4">
   <div id="vs-start" [style.height]="vsBefore + 'px'"></div>
   @for (page of displayedPages; track page.id) {
     <div class="flex gap-4">
@@ -32,7 +32,7 @@
         }
 
         <app-form
-          class="flex-grow"
+          class="flex-grow flex flex-col mx-4 my-2"
           [schema]="page.constructor"
           [data]="page"
         ></app-form>
@@ -50,11 +50,7 @@
           </div>
         }
       </div>
-      <div class="w-[21cm] h-[29.7cm]">
-        <ng-container
-          *ngComponentOutlet="page.component; inputs: { page }"
-        ></ng-container>
-      </div>
+      <app-redactor-page [page]="page"></app-redactor-page>
     </div>
   }
   <div [style.height]="vsAfter + 'px'"></div>

@@ -1,26 +1,26 @@
-import { JsonPipe } from '@angular/common'
 import { Component } from '@angular/core'
 import { PropMarkdown, PropString } from '../../../form/schemas'
-import { RedactorPage, RedactorPageComponent } from '../../../redactor-page/redactor-page.component'
+import { MarkdownViewerComponent } from '../../../markdown-viewer/markdown-viewer.component'
+import { RedactorBasePage, RedactorBasePageComponent } from '../../../redactor-base-page/redactor-base-page.component'
 
 @Component({
   selector: 'app-cthulhu-page',
-  imports: [JsonPipe],
+  imports: [MarkdownViewerComponent],
   templateUrl: './cthulhu-page.component.html',
   styleUrl: './cthulhu-page.component.scss'
 })
-export class CthulhuPageComponent extends RedactorPageComponent<CthulhuPage> {
+export class CthulhuPageComponent extends RedactorBasePageComponent<CthulhuPage> {
 
 }
 
-export class CthulhuPage extends RedactorPage {
+export class CthulhuPage extends RedactorBasePage {
 	@PropString()
 	background = ''
 
 	@PropString()
 	title = ''
 
-	@PropMarkdown({ fullHeight: true })
+	@PropMarkdown({ grow: true })
 	content = ''
 
 	constructor() {

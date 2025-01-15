@@ -1,7 +1,7 @@
 import { JsonPipe } from '@angular/common'
 import { Component } from '@angular/core'
 import { PropString } from '../../../form/schemas'
-import { RedactorPage, RedactorPageComponent } from '../../../redactor-page/redactor-page.component'
+import { RedactorBasePage, RedactorBasePageComponent } from '../../../redactor-base-page/redactor-base-page.component'
 
 @Component({
   selector: 'app-cthulhu-title-page',
@@ -9,11 +9,11 @@ import { RedactorPage, RedactorPageComponent } from '../../../redactor-page/reda
   templateUrl: './cthulhu-title-page.component.html',
   styleUrl: './cthulhu-title-page.component.scss'
 })
-export class CthulhuTitlePageComponent extends RedactorPageComponent<CthulhuTitlePage> {
+export class CthulhuTitlePageComponent extends RedactorBasePageComponent<CthulhuTitlePage> {
 
 }
 
-export class CthulhuTitlePage extends RedactorPage {
+export class CthulhuTitlePage extends RedactorBasePage {
 	@PropString()
 	background = ''
 

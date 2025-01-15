@@ -1,0 +1,5 @@
+<div class="flex flex-col items-center">
+  @for (page of pages; track page.id) {
+    <app-redactor-page [page]="page"></app-redactor-page>
+  }
+</div>

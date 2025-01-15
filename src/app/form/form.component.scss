@@ -1,0 +1,10 @@
+::ng-deep .input-container {
+	> :not(label) {
+		display: flex;
+		flex-direction: column;
+	}
+
+	&.flex-grow > :not(label) {
+		flex-grow: 1;
+	}
+}
