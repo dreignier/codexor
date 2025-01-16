@@ -1,5 +1,8 @@
-import { Component, HostListener, Input, OnInit, Type } from '@angular/core'
+import { Component, HostListener, Input, OnDestroy, OnInit, Type } from '@angular/core'
 import { RouterLink } from '@angular/router'
+import { throttle } from 'lodash'
+import { Subscription } from 'rxjs'
+import { Doc } from '../../doc'
 import { ButtonComponent } from '../button/button.component'
 import { FormComponent } from '../form/form.component'
 import { Module } from '../module/module'
@@ -18,11 +21,15 @@ const PAGE_HEIGHT_GAP = PAGE_HEIGHT + GAP
   templateUrl: './redactor.component.html',
   styleUrl: './redactor.component.scss'
 })
-export class RedactorComponent implements OnInit {
+export class RedactorComponent implements OnInit, OnDestroy {
 	@Input() module!: Module
 	pages: RedactorBasePage[] = []
 	displayedPages: RedactorBasePage[] = []
 	printMode = false
+	doc!: Doc
+	docSubscription!: Subscription
+
+	throttledOnChange = throttle(() => { this.doc.set(this.serialize()) }, 5000)
 
 	vsStart = 0
 	vsBefore = 0
@@ -30,14 +37,18 @@ export class RedactorComponent implements OnInit {
 	vsTotal = 0
 
 	ngOnInit(): void {
-		this.pages = this.module.defaultPages()
-
-		this.fixIds()
-		this.computeVsTotal()
-
 		this.vsStart = document.getElementById('vs-start')!.offsetTop
 
-		this.onScroll()
+		this.doc = new Doc(this.module + '.codex')
+		this.reload()
+
+		this.docSubscription = this.doc.change.subscribe(() => {
+			this.reload()
+		})
+	}
+
+	ngOnDestroy(): void {
+		this.docSubscription.unsubscribe()
 	}
 
 	serialize() {
@@ -65,6 +76,11 @@ export class RedactorComponent implements OnInit {
 			Object.assign(result, page)
 			return result
 		})
+	}
+
+	reload() {
+		this.pages = this.doc.value ? this.unserialize(this.doc.value) : this.module.defaultPages()
+		this.recompute()
 	}
 
 	save() {
@@ -95,6 +111,10 @@ export class RedactorComponent implements OnInit {
 
 		reader.readAsText(file)
 		input.value = ''
+	}
+
+	onChange() {
+		this.throttledOnChange()
 	}
 
 	reset() {

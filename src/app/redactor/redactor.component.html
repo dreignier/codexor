@@ -69,6 +69,7 @@
           class="flex-grow flex flex-col mx-4 my-2"
           [schema]="page.constructor"
           [data]="page"
+          (appChange)="onChange()"
         ></app-form>
 
         @if (!pages[page.id + 1] || pages[page.id + 1].movable) {

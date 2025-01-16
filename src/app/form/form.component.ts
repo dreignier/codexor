@@ -1,5 +1,5 @@
 import { NgComponentOutlet } from '@angular/common'
-import { Component, Input, OnInit, Type } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output, Type } from '@angular/core'
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms'
 import { InputComponent } from '../inputs/input.component'
 import { MarkdownInputComponent } from '../inputs/markdown-input/markdown-input.component'
@@ -16,6 +16,7 @@ import { getSchema, SchemaProperty } from './schemas'
 export class FormComponent  implements OnInit {
 	@Input() schema!: any
 	@Input() data?: any
+	@Output() appChange = new EventEmitter<{ key: string, value: any }>()
 	inputs: { property: SchemaProperty, control: FormControl, component: Type<InputComponent> }[] = []
 	name: string = ''
 	form!: FormGroup
@@ -29,6 +30,7 @@ export class FormComponent  implements OnInit {
 
 			control.valueChanges.subscribe(value => {
 				this.data[property.key] = value === null ? undefined : value
+				this.appChange.emit({ key: property.key, value: this.data[property.key] })
 			})
 
 			control.setValue(this.data[property.key])
