@@ -1,4 +1,5 @@
 import { Component, HostListener, Input, OnInit, Type } from '@angular/core'
+import { RouterLink } from '@angular/router'
 import { ButtonComponent } from '../button/button.component'
 import { FormComponent } from '../form/form.component'
 import { Module } from '../module/module'
@@ -13,7 +14,7 @@ const PAGE_HEIGHT_GAP = PAGE_HEIGHT + GAP
 
 @Component({
   selector: 'app-redactor',
-  imports: [FormComponent, ButtonComponent, TPipe, RedactorPageComponent],
+  imports: [FormComponent, ButtonComponent, TPipe, RedactorPageComponent, RouterLink],
   templateUrl: './redactor.component.html',
   styleUrl: './redactor.component.scss'
 })
@@ -37,6 +38,68 @@ export class RedactorComponent implements OnInit {
 		this.vsStart = document.getElementById('vs-start')!.offsetTop
 
 		this.onScroll()
+	}
+
+	serialize() {
+		const types = this.module.pages()
+
+		return JSON.stringify({
+			module: this.module.name,
+			pages: this.pages.map(page => ({ classId: types.indexOf(page.constructor as Type<RedactorBasePage>), ...page }))
+		})
+	}
+
+	unserialize(json: string) {
+		const data = JSON.parse(json)
+
+		if (data.module !== this.module.name) {
+			throw new Error('Module mismatch')
+		}
+
+		const types = this.module.pages()
+		return data.pages.map((page: any) => {
+			const classId = page.classId
+			delete page.classId
+
+			const result = new types[classId]()
+			Object.assign(result, page)
+			return result
+		})
+	}
+
+	save() {
+		const json = this.serialize()
+		const blob = new Blob([json], { type: 'application/json' })
+		const url = URL.createObjectURL(blob)
+		const a = document.createElement('a')
+		a.href = url
+		a.download =  (this.module.codexTitle(this.pages) || 'codex') + '.json'
+		a.click()
+		URL.revokeObjectURL(url)
+	}
+
+	upload(event: Event) {
+		const input = event.target as HTMLInputElement
+		const file = input.files?.[0]
+
+		if (!file) {
+			return
+		}
+
+		const reader = new FileReader()
+
+		reader.onload = () => {
+			this.pages = this.unserialize(reader.result as string)
+			this.recompute()
+		}
+
+		reader.readAsText(file)
+		input.value = ''
+	}
+
+	reset() {
+		this.pages = this.module.defaultPages()
+		this.recompute()
 	}
 
 	computeVsTotal() {

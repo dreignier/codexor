@@ -6,11 +6,19 @@ export class Module {
 		readonly name: string
 	) {}
 
+	pages(): Type<RedactorBasePage>[] {
+		return []
+	}
+
 	defaultPages() : RedactorBasePage[] {
 		return []
 	}
 
 	availablePages() : Type<RedactorBasePage>[] {
 		return []
+	}
+
+	codexTitle(pages: RedactorBasePage[]): string {
+		return ''
 	}
 }

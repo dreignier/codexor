@@ -1,9 +1,9 @@
 import { Component } from '@angular/core'
-import { RouterOutlet } from '@angular/router'
+import { RouterLink, RouterOutlet } from '@angular/router'
 
 @Component({
 	selector: 'app-codexor-page',
-	imports: [RouterOutlet],
+	imports: [RouterOutlet, RouterLink],
 	templateUrl: './codexor-page.component.html',
 	styleUrl: './codexor-page.component.scss'
 })

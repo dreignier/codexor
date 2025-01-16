@@ -1,9 +1,43 @@
+<div class="flex justify-center px-4">
+  <div class="flex gap-4 mt-4 max-w-[2036px] flex-grow">
+    <app-button
+      icon="save"
+      label="{{ 'redactor.save' | t }}"
+      [size]="7"
+      (appClick)="save()"
+    ></app-button>
+
+    <input #file type="file" (change)="upload($event)" class="hidden" />
+    <app-button
+      icon="folder-open"
+      label="{{ 'redactor.load' | t }}"
+      [size]="7"
+      (appClick)="file.click()"
+    ></app-button>
+
+    <app-button
+      icon="plus-circle"
+      label="{{ 'redactor.new' | t }}"
+      [size]="7"
+      (appClick)="reset()"
+    ></app-button>
+
+    <a [routerLink]="['/' + module.name, 'print']">
+      <app-button
+        icon="printer"
+        label="{{ 'redactor.printable' | t }}"
+        [size]="7"
+      ></app-button>
+    </a>
+  </div>
+</div>
+
 <div class="flex flex-col items-center gap-4">
   <div id="vs-start" [style.height]="vsBefore + 'px'"></div>
   @for (page of displayedPages; track page.id) {
-    <div class="flex gap-4">
+    <div class="flex w-full justify-center gap-4 px-4">
       <div
-        class="h-[29.7cm] flex-grow min-w-[32.5cm] flex flex-col rounded bg-gray-800"
+        class="h-[29.7cm] flex-grow max-w-[32.5cm] flex flex-col rounded bg-gray-800"
       >
         @if (page.movable) {
           <div class="flex p-1">
