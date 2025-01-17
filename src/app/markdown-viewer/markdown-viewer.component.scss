@@ -1,0 +1,155 @@
+::ng-deep .markdown {
+	line-height: 1.3;
+  font-size: 0.75rem;
+  font-family: "Segoe Regular", sans-serif;
+
+	img {
+    float: left;
+    margin-right: 8px;
+  }
+
+  .text-right img {
+    float: right;
+    margin-left: 8px;
+    margin-right: 0;
+  }
+
+  center img {
+    float: none;
+    margin: 8px 0 8px 0;
+    clear: both;
+  }
+
+	em {
+    font-family: "Segoe UI Italic", sans-serif;
+  }
+
+  strong {
+    font-family: "Segoe UI Bold", sans-serif;
+    font-weight: normal;
+  }
+
+  em strong,
+  strong em {
+    font-family: "Segoe UI Bold Italic", sans-serif;
+  }
+
+	p {
+    margin-bottom: 10px;
+    text-align: justify;
+
+    &:empty {
+      margin-bottom: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &:has(+ ul),
+    &:has(+ ol) {
+      margin-bottom: 0;
+    }
+  }
+
+	h1,
+	h2,
+  h3 {
+    font-size: 16px;
+    font-family: "Segoe UI Bold", sans-serif;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+	h1 {
+		font-size: 24px;
+		text-align: center;
+	}
+
+  h2 {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  h3 {
+    margin-left: 16px;
+    font-family: "Segoe Regular", sans-serif;
+  }
+
+	ol {
+    list-style: decimal;
+  }
+
+  ul {
+    list-style: disc;
+  }
+
+  ol,
+  ul {
+    margin-left: 15px;
+    margin-bottom: 10px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  li {
+    margin-bottom: 5px;
+    text-align: justify;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+	big {
+    font-family: "Segoe UI Bold", sans-serif;
+
+    &.bigger-1 {
+      font-size: 24px;
+    }
+
+    &.bigger-2 {
+      font-size: 36px;
+    }
+
+    &.bigger-3 {
+      font-size: 48px;
+    }
+
+    &.bigger-4 {
+      font-size: 60px;
+    }
+
+    &.bigger-5 {
+      font-size: 72px;
+    }
+
+    &.bigger-6 {
+      font-size: 84px;
+    }
+
+    &.bigger-7 {
+      font-size: 96px;
+    }
+
+    &.bigger-8 {
+      font-size: 108px;
+    }
+
+    &.bigger-9 {
+      font-size: 120px;
+    }
+
+    &.bigger-10 {
+      font-size: 132px;
+    }
+  }
+}

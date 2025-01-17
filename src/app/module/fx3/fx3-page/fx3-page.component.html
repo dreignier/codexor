@@ -1,0 +1,21 @@
+<div
+  class="h-full bg-white text-black fx3 px-8 relative page bg-cover bg-center bg-no-repeat"
+  [class.pl-12]="page.id % 2 === 0"
+  [class.pr-12]="page.id % 2"
+>
+  <div
+    class="page-title"
+    [class.page-title-left]="page.id % 2 === 0"
+    [class.page-title-right]="page.id % 2"
+  >
+    <span class="rotate-180">{{ page.title }}</span>
+  </div>
+  <div
+    class="saira-stencil-one absolute top-[550px] bg-white border-2 border-black size-8 flex justify-center items-center rounded-full"
+    [class.left-2]="page.id % 2 === 0"
+    [class.right-2]="page.id % 2"
+  >
+    {{ page.id }}
+  </div>
+  <app-markdown-viewer [content]="page.content"></app-markdown-viewer>
+</div>

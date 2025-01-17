@@ -3,7 +3,7 @@
     <div class="flex gap-4">
       @for (column of section.columns; track column.id) {
         <div
-          class="flex-1"
+          class="flex-1 markdown"
           [innerHTML]="converter.makeHtml(column.content)"
         ></div>
       }
@@ -14,7 +14,7 @@
     <div class="flex gap-4 absolute bottom-0 left-0 right-0">
       @for (column of section.columns; track column.id) {
         <div
-          class="flex-1"
+          class="flex-1 markdown"
           [innerHTML]="converter.makeHtml(column.content)"
         ></div>
       }

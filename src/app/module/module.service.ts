@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core'
 import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router'
 import { filter, map } from 'rxjs'
 import { Cthulhu } from './cthulhu/cthulhu'
+import { Fx3 } from './fx3/fx3'
 import { Module } from './module'
 
-const MODULES = [new Cthulhu()]
+const MODULES = [new Cthulhu(), new Fx3()]
 const PARAM_NAME = 'module'
 
 @Injectable({

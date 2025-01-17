@@ -8,7 +8,47 @@ import { Converter } from 'showdown'
   styleUrl: './markdown-viewer.component.scss'
 })
 export class MarkdownViewerComponent {
-	converter = new Converter()
+	converter = new Converter({ extensions: [{
+		type: 'lang',
+		regex: /([a-zéàèîïëù.?!"' «»])\n([*])/gi,
+		replace: '$1<br>$2'
+	}, {
+		type: 'lang',
+		regex: /([a-zéàèîïëù.?!"' «»*])\n([a-zéàèîïëù"' «»])/gi,
+		replace: '$1<span class="mr-2"><br>&nbsp;</span>$2'
+	}, {
+		type: 'lang',
+		regex: /§§/g,
+		replace: '<span class="inline-block w-[10%]">&nbsp;</span>'
+	}, {
+		type: 'lang',
+		regex: />>([^<\n]+)<</g,
+		replace: '<center>$1</center>'
+	}, {
+		type: 'lang',
+		regex: />>([^<>\n]+)>>/g,
+		replace: '<div class="text-right">$1</center>'
+	}, {
+		type: 'lang',
+		regex: /@@([^@\n]+)@@/g,
+		replace: '<span class="link">$1</span>'
+	}, {
+		type: 'lang',
+		regex: /~~([^~\n]+)~~/g,
+		replace: '<del>$1</del>'
+	}, {
+		type: 'lang',
+		regex: /\^\^([^\^\n]+)\^\^/g,
+		replace: '<sup>$1</sup>'
+	}, {
+		type: 'lang',
+		regex: /__([^_\n]+)__/g,
+		replace: '<ins>$1</ins>'
+	}, {
+		type: 'lang',
+		regex: /!(!+)([^!\n]+)(!+)!/g,
+		replace: (match: string, p1: string, p2: string) => `<big class="bigger-${p1.length - 1}">${p2}</big>`
+	}]})
 
 	_content = ''
 	initialized = false

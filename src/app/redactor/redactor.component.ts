@@ -4,11 +4,12 @@ import { throttle } from 'lodash'
 import { Subscription } from 'rxjs'
 import { Doc } from '../../doc'
 import { ButtonComponent } from '../button/button.component'
+import { DialogService } from '../dialog/dialog.service'
 import { FormComponent } from '../form/form.component'
 import { Module } from '../module/module'
 import { RedactorBasePage } from '../redactor-base-page/redactor-base-page.component'
 import { RedactorPageComponent } from '../redactor-page/redactor-page.component'
-import { TPipe } from '../t'
+import { t, TPipe } from '../t'
 import { arrayDown, arrayUp } from '../util'
 
 const PAGE_HEIGHT = 1122.52
@@ -25,21 +26,24 @@ export class RedactorComponent implements OnInit, OnDestroy {
 	@Input() module!: Module
 	pages: RedactorBasePage[] = []
 	displayedPages: RedactorBasePage[] = []
-	printMode = false
 	doc!: Doc
 	docSubscription!: Subscription
 
-	throttledOnChange = throttle(() => { this.doc.set(this.serialize()) }, 5000)
+	throttledOnChange = throttle(() => { this.doc.set(this.module.serialize(this.pages)) }, 5000)
 
 	vsStart = 0
 	vsBefore = 0
 	vsAfter = 0
 	vsTotal = 0
 
+	constructor(
+		readonly dialog: DialogService
+	) {}
+
 	ngOnInit(): void {
 		this.vsStart = document.getElementById('vs-start')!.offsetTop
 
-		this.doc = new Doc(this.module + '.codex')
+		this.doc = new Doc(this.module.name + '.codex')
 		this.reload()
 
 		this.docSubscription = this.doc.change.subscribe(() => {
@@ -51,40 +55,13 @@ export class RedactorComponent implements OnInit, OnDestroy {
 		this.docSubscription.unsubscribe()
 	}
 
-	serialize() {
-		const types = this.module.pages()
-
-		return JSON.stringify({
-			module: this.module.name,
-			pages: this.pages.map(page => ({ classId: types.indexOf(page.constructor as Type<RedactorBasePage>), ...page }))
-		})
-	}
-
-	unserialize(json: string) {
-		const data = JSON.parse(json)
-
-		if (data.module !== this.module.name) {
-			throw new Error('Module mismatch')
-		}
-
-		const types = this.module.pages()
-		return data.pages.map((page: any) => {
-			const classId = page.classId
-			delete page.classId
-
-			const result = new types[classId]()
-			Object.assign(result, page)
-			return result
-		})
-	}
-
 	reload() {
-		this.pages = this.doc.value ? this.unserialize(this.doc.value) : this.module.defaultPages()
+		this.pages = this.doc.value ? this.module.unserialize(this.doc.value) : this.module.defaultPages()
 		this.recompute()
 	}
 
 	save() {
-		const json = this.serialize()
+		const json = this.module.serialize(this.pages)
 		const blob = new Blob([json], { type: 'application/json' })
 		const url = URL.createObjectURL(blob)
 		const a = document.createElement('a')
@@ -105,7 +82,7 @@ export class RedactorComponent implements OnInit, OnDestroy {
 		const reader = new FileReader()
 
 		reader.onload = () => {
-			this.pages = this.unserialize(reader.result as string)
+			this.pages = this.module.unserialize(reader.result as string)
 			this.recompute()
 		}
 
@@ -118,8 +95,10 @@ export class RedactorComponent implements OnInit, OnDestroy {
 	}
 
 	reset() {
-		this.pages = this.module.defaultPages()
-		this.recompute()
+		this.dialog.confirm(t('redactor.confirmReset')).subscribe(() => {
+			this.pages = this.module.defaultPages()
+			this.recompute()
+		})
 	}
 
 	computeVsTotal() {
@@ -134,10 +113,6 @@ export class RedactorComponent implements OnInit, OnDestroy {
 
 	@HostListener('window:scroll')
 	onScroll() {
-		if (this.printMode) {
-			return
-		}
-
 		const screenTop = document.documentElement.scrollTop
 		const screenBottom = screenTop + window.innerHeight
 

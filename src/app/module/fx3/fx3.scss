@@ -1,0 +1,21 @@
+@font-face {
+	font-family: 'Saira Stencil One Regular';
+	font-style: normal;
+	font-weight: normal;
+	src: local('Saira Stencil One Regular'), url('fonts/SairaStencilOne-Regular.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Rubik Dirt Regular';
+		font-style: normal;
+	font-weight: normal;
+	src: local('Rubik Dirt Regular'), url('fonts/RubikDirt-Regular.ttf') format('truetype');
+}
+
+.saira-stencil-one {
+	font-family: 'Saira Stencil One Regular', sans-serif;
+}
+
+.rubik-dirt {
+	font-family: 'Rubik Dirt Regular', sans-serif;
+}

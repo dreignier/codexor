@@ -1,9 +1,11 @@
 import { DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common'
-import { ApplicationConfig, importProvidersFrom, LOCALE_ID, provideZoneChangeDetection } from '@angular/core'
+import { ApplicationConfig, ErrorHandler, importProvidersFrom, LOCALE_ID, NgZone, provideZoneChangeDetection } from '@angular/core'
 import { provideRouter } from '@angular/router'
 import { MissingTranslationHandler, TranslateCompiler, TranslateModule, TranslatePipe } from '@ngx-translate/core'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
 import { routes } from './app.routes'
+import { GlobalErrorHandler } from './error-handler'
+import { MessageService } from './message/message.service'
 import { CodexorMissingTranslationHandler } from './t'
 
 export const appConfig: ApplicationConfig = {
@@ -23,7 +25,12 @@ export const appConfig: ApplicationConfig = {
 				}
 			})
 		),
-		TranslatePipe
+		TranslatePipe,
+		{
+			provide: ErrorHandler,
+			useFactory(messageService: MessageService, zone: NgZone) { return new GlobalErrorHandler(messageService, zone) },
+			deps: [MessageService, NgZone]
+		}
 	]
 };
 

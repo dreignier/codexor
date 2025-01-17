@@ -1,0 +1,58 @@
+@use '../fx3.scss';
+
+::ng-deep .fx3 .markdown {
+	h1, h2, h3 {
+		font-family: 'Saira Stencil One Regular', sans-serif;
+		letter-spacing: 2px;
+	}
+
+	h1 {
+		font-size: 28px
+	}
+
+	h2 {
+		font-weight: normal;
+	}
+
+	h3 {
+		font-weight: normal;
+	}
+
+	hr {
+		border-top: 2px dashed black;
+	}
+}
+
+.page-title {
+	/* saira-stencil-one absolute w-7 bg-black text-white */
+	font-family: 'Saira Stencil One Regular', sans-serif;
+	position: absolute;
+	width: 28px;
+	color: white;
+	height: 570px;
+	text-transform: uppercase;
+	writing-mode: vertical-rl;
+	text-orientation: sideways;
+	display: flex;
+	flex-direction: column;
+	align-items: end;
+	padding-bottom: 30px;
+
+	&.page-title-left {
+		left: 0;
+		top : 0;
+		background: linear-gradient(45deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 100%);
+	}
+
+	&.page-title-right {
+		right: 0;
+		bottom: 0;
+		background: linear-gradient(45deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,1) 100%);
+	}
+}
+
+.page {
+	background-image: url(../images/background.png);
+	background-color: rgba(255, 255, 255, 0.7);
+  background-blend-mode: lighten;
+}
